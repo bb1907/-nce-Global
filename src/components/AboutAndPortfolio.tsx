@@ -5,146 +5,115 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { Globe, Landmark, Lightbulb, TrendingUp, ArrowRight } from "lucide-react";
+import { Globe, Lightbulb, Workflow, Building, ShoppingCart, Briefcase, MoveUpRight } from "lucide-react";
+import { translations, Language } from "../translations";
 
-export function About() {
+export function About({ lang }: { lang: Language }) {
+  const t = translations[lang].about;
+
   return (
-    <section className="py-[140px] max-w-7xl mx-auto px-8 relative overflow-hidden">
-      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent/5 blur-[100px] rounded-full pointer-events-none" />
-      <div className="grid grid-cols-12 gap-8 items-end mb-32 relative z-10">
-        <div className="col-span-12 lg:col-span-12">
-          <span className="label-caps mb-4 block">CORE MISSION</span>
-          <h2 className="text-[56px] font-bold tracking-tight text-white max-w-3xl leading-[1.1]">The engine behind <span className="text-zinc-500">strategic innovation.</span></h2>
-        </div>
-        <div className="col-span-12 lg:col-span-8 mt-10">
-          <p className="text-2xl text-zinc-400 font-light leading-relaxed">
-            INCE GLOBAL is a global holding company focused on strategic investments and innovation-driven sectors.
-            We act as a catalyst for growth, empowering industry leaders and emerging ventures.
+    <section id="about" className="py-32 bg-obsidian relative overflow-hidden">
+      <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="space-y-10"
+        >
+          <span className="label-caps tracking-[0.3em] text-accent font-black">{t.label}</span>
+          <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.1]">{t.title}</h2>
+          <p className="text-xl text-zinc-400 font-light leading-relaxed max-w-xl">
+            {t.text}
           </p>
+        </motion.div>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+          {t.cards.map((card, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="p-8 glass-panel rounded-[2.5rem] hover:bg-white/[0.03] transition-all group border border-white/5 hover:border-white/10"
+            >
+              <div className="w-1 h-8 bg-accent/20 mb-6 group-hover:bg-accent transition-colors rounded-full" />
+              <h3 className="text-white font-bold mb-4 text-xl group-hover:text-accent transition-colors">{card.title}</h3>
+              <p className="text-zinc-500 text-sm leading-relaxed font-light">{card.desc}</p>
+            </motion.div>
+          ))}
         </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
-        <AboutCard
-          icon={<Globe className="w-6 h-6 text-accent" />}
-          title="Global Presence"
-          description="Unlocking value across international markets with localized expertise and global scale."
-        />
-        <AboutCard
-          icon={<Landmark className="w-6 h-6 text-accent" />}
-          title="Strategic Investments"
-          description="Deploying patient capital into high-impact sectors that define the global economy."
-        />
-        <AboutCard
-          icon={<Lightbulb className="w-6 h-6 text-accent" />}
-          title="Innovation Focus"
-          description="Pioneering new technologies and business models through deliberate R&D and venture scaling."
-        />
-        <AboutCard
-          icon={<TrendingUp className="w-6 h-6 text-accent" />}
-          title="Sustainable Growth"
-          description="Ensuring long-term resilience and value creation for all stakeholders and partners."
-        />
       </div>
     </section>
   );
 }
 
-function AboutCard({ icon, title, description }: { icon: React.ReactNode; title: string; description: string }) {
+export function Portfolio({ lang }: { lang: Language }) {
+  const t = translations[lang].business;
+
+  const areas = [
+    { key: 'trade', icon: <Globe className="w-6 h-6 text-accent" /> },
+    { key: 'consultancy', icon: <Lightbulb className="w-6 h-6 text-accent" /> },
+    { key: 'tech', icon: <Workflow className="w-6 h-6 text-accent" /> },
+    { key: 'construction', icon: <Building className="w-6 h-6 text-accent" /> },
+    { key: 'procurement', icon: <ShoppingCart className="w-6 h-6 text-accent" /> },
+    { key: 'ma', icon: <Briefcase className="w-6 h-6 text-accent" /> },
+  ];
+
+  return (
+    <section id="business" className="py-32 bg-obsidian-light relative">
+      <div className="max-w-7xl mx-auto px-8">
+        <div className="mb-20 text-center lg:text-left">
+          <span className="label-caps mb-6 block text-secondary-accent tracking-[0.3em] font-black">{t.label}</span>
+          <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-white">{t.title}</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {areas.map((area, i) => {
+            const data = (t as any)[area.key];
+            return (
+              <PortfolioCard
+                key={i}
+                num={data.label}
+                title={data.title}
+                desc={data.desc}
+                icon={area.icon}
+                lang={lang}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function PortfolioCard({ num, title, desc, icon, lang }: { num: string; title: string; desc: string; icon: React.ReactNode; lang: Language }) {
+  const t = translations[lang].business;
   return (
     <motion.div
-      whileHover={{ y: -5 }}
-      className="p-10 glass-panel hover:bg-white/[0.04] transition-all duration-500 group rounded-2xl"
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      className="group relative h-[400px] overflow-hidden glass-panel rounded-[2.5rem] p-10 flex flex-col justify-between hover:bg-white/[0.04] transition-all border border-white/5 hover:border-accent/20"
     >
-      <div className="mb-8 p-3 w-fit bg-accent/10 rounded-lg group-hover:bg-accent/20 transition-colors">{icon}</div>
-      <h3 className="text-xl font-bold mb-4 text-white group-hover:text-accent transition-colors">{title}</h3>
-      <p className="text-zinc-500 text-sm font-light leading-relaxed">{description}</p>
-    </motion.div>
-  );
-}
-
-export function Portfolio() {
-  return (
-    <section className="py-[140px] bg-obsidian-light relative">
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] pointer-events-none" />
-      <div className="max-w-7xl mx-auto px-8 relative z-10">
-        <div className="mb-24">
-          <span className="label-caps mb-4 block">SECTORS</span>
-          <h2 className="text-[56px] font-bold tracking-tight text-white">Investment Portfolios</h2>
+      <div className="relative z-10">
+        <div className="flex justify-between items-start mb-10">
+          <div className="p-4 bg-white/5 rounded-2xl group-hover:bg-accent/10 transition-all border border-white/5">
+            {icon}
+          </div>
+          <span className="text-[10px] font-black tracking-[0.2em] text-zinc-500">{num}</span>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
-          {/* Technology */}
-          <div className="md:col-span-4 relative group overflow-hidden h-[550px] rounded-2xl glass-panel">
-            <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEE-2eDBXyPebZp82NAeW8jLCtZBzQ5hBNdcvG0Oxp0_t60fUcCu1CEtjkfAhyAAMg9J5tO4X56gwXlPy109Ol-I7ykn2oK9u--vV_YniBHK0JP0zOjXJm0vDdq6ScxB0IDigxlQ29bE2mx_xPa1LpgKjh595T_JKBvNrSyN9WYYQ3V1waSDarjK-8MphbiJ5kjzdfXcipzmVTgMwvvfg4vNaU223YHrM6V8w3Uxl5Sy8xx4rHrAhDwYHeVhTNbx521R8QgZuffbc"
-              className="absolute inset-0 w-full h-full object-cover grayscale opacity-20 group-hover:scale-105 transition-all duration-1000"
-              alt="Technology"
-              referrerPolicy="no-referrer"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/20 to-transparent" />
-            <div className="absolute bottom-0 p-12 w-full">
-              <span className="label-caps text-secondary-accent mb-2 block">01 / DISRUPTION</span>
-              <h3 className="text-4xl font-bold mb-4">Technology</h3>
-              <p className="text-zinc-400 font-light max-w-md mb-8">
-                Software, AI, digital transformation, and sovereign infrastructure projects.
-              </p>
-              <LearnMoreLink />
-            </div>
-          </div>
-
-          {/* Investment */}
-          <div className="md:col-span-2 glass-panel p-12 flex flex-col justify-between h-[550px] rounded-2xl hover:bg-white/[0.04] transition-all duration-500 group">
-            <div>
-              <span className="label-caps mb-4 block">02 / CAPITAL</span>
-              <h3 className="text-3xl font-bold mb-6 group-hover:text-accent transition-colors">Investment</h3>
-              <p className="text-zinc-400 text-sm font-light leading-relaxed">
-                Venture capital, startups, and cross-border strategic partnerships that redefine global markets.
-              </p>
-            </div>
-            <LearnMoreLink />
-          </div>
-
-          {/* Real Estate */}
-          <div className="md:col-span-2 glass-panel p-12 flex flex-col justify-between h-[550px] rounded-2xl hover:bg-white/[0.04] transition-all duration-500 group">
-            <div>
-              <span className="label-caps mb-4 block">03 / PHYSICAL</span>
-              <h3 className="text-3xl font-bold mb-6 group-hover:text-accent transition-colors">Real Estate</h3>
-              <p className="text-zinc-400 text-sm font-light leading-relaxed">
-                High-yield residential, commercial, and transformative development projects in key global cities.
-              </p>
-            </div>
-            <LearnMoreLink />
-          </div>
-
-          {/* Finance */}
-          <div className="md:col-span-4 relative group overflow-hidden h-[550px] rounded-2xl glass-panel">
-            <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJIzkHRUqrkWpyxqIqAapp6KfAU3vzSlh4GXQOJ6Uy2fQYJH9jiP7jDSkXIQjp8XjMEMqNTaEwZSe7E3U9hHt6Sy-6Spazlin_O-hVJZbejNRLue97uoWxITqpOQlO3-g381rYbBnZYUght9UKAAbQq1nMmiwF0bNTdGnURuRfb4RVmxI-uZaSxv_WjBdc_--o6RDZWtAZd4qt7Pggrtw--kZm_fY6TZyldnP85BOCLxtZ7LjAuPBSQc_gsM7pvQ7HV7z2bNlD2E8"
-              className="absolute inset-0 w-full h-full object-cover grayscale opacity-20 group-hover:scale-105 transition-all duration-1000"
-              alt="Finance"
-              referrerPolicy="no-referrer"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/20 to-transparent" />
-            <div className="absolute bottom-0 p-12 w-full">
-              <span className="label-caps text-secondary-accent mb-2 block">04 / MANAGEMENT</span>
-              <h3 className="text-4xl font-bold mb-4">Finance</h3>
-              <p className="text-zinc-400 font-light max-w-md mb-8">
-                Global portfolio management, financial advisory, and institutional risk mitigation strategies.
-              </p>
-              <LearnMoreLink />
-            </div>
-          </div>
-        </div>
+        <h3 className="text-2xl font-bold text-white mb-4 transition-colors group-hover:text-accent group-hover:translate-x-1 transition-all">{title}</h3>
+        <p className="text-zinc-400 text-sm leading-relaxed font-light">{desc}</p>
       </div>
-    </section>
-  );
-}
-
-function LearnMoreLink() {
-  return (
-    <a href="#" className="flex items-center gap-2 label-caps text-zinc-500 group-hover:text-white transition-all group-hover:gap-4">
-      Learn More <ArrowRight className="w-4 h-4 text-accent" />
-    </a>
+      <div className="relative z-10 flex items-center gap-2 text-accent text-[10px] font-black tracking-widest uppercase opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all cursor-pointer">
+        {t.learnMore} <MoveUpRight className="w-3 h-3" />
+      </div>
+      
+      {/* Visual Accents */}
+      <div className="absolute -bottom-20 -right-20 w-48 h-48 bg-accent/5 blur-[80px] rounded-full group-hover:bg-accent/10 transition-all" />
+      <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-transparent via-accent/20 to-transparent scale-x-0 group-hover:scale-x-full transition-transform duration-500" />
+    </motion.div>
   );
 }

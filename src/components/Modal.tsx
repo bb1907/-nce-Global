@@ -5,7 +5,7 @@
 
 import React from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X } from "lucide-react";
+import { X, ShieldCheck, Scale, FileText, Globe } from "lucide-react";
 
 interface ModalProps {
   isOpen: boolean;
@@ -24,26 +24,41 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-obsidian/80 backdrop-blur-md"
+            className="absolute inset-0 bg-obsidian/90 backdrop-blur-md"
           />
           <motion.div
-            initial={{ opacity: 0, scale: 0.98, y: 10 }}
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.98, y: 10 }}
-            className="relative w-full max-w-4xl max-h-[85vh] overflow-hidden glass-panel rounded-3xl flex flex-col border-white/10"
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden glass-panel rounded-[2.5rem] flex flex-col border border-white/10 shadow-[0_0_100px_rgba(0,0,0,0.5)]"
           >
+            {/* Header */}
             <div className="p-8 border-b border-white/[0.05] flex justify-between items-center bg-white/[0.02]">
-              <h2 className="text-3xl font-bold text-white tracking-tight font-display">{title}</h2>
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 bg-accent/10 rounded-xl flex items-center justify-center">
+                  <ShieldCheck className="w-6 h-6 text-accent" />
+                </div>
+                <h2 className="text-3xl font-bold text-white tracking-tight">{title}</h2>
+              </div>
               <button 
                 onClick={onClose}
                 className="p-3 bg-white/5 hover:bg-white/10 rounded-full transition-all text-zinc-500 hover:text-white"
               >
-                <X className="w-5 h-5" />
+                <X className="w-6 h-6" />
               </button>
             </div>
-            <div className="p-8 overflow-y-auto custom-scrollbar bg-obsidian">
+
+            {/* Content */}
+            <div className="p-10 overflow-y-auto custom-scrollbar bg-obsidian/40 flex-1">
               <div className="prose prose-invert max-w-none text-zinc-400 font-light leading-relaxed text-lg">
                 {children}
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="p-6 border-t border-white/[0.05] bg-white/[0.01] flex justify-center">
+              <div className="text-[10px] uppercase tracking-[0.2em] text-zinc-600 font-black">
+                INCE GLOBAL B.V. Institutional Framework
               </div>
             </div>
           </motion.div>
@@ -53,88 +68,75 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
   );
 }
 
+const Section = ({ icon: Icon, title, children }: { icon: any; title: string; children: React.ReactNode }) => (
+  <section className="mb-12 last:mb-0">
+    <div className="flex items-center gap-4 mb-6">
+      <div className="w-1.5 h-1.5 bg-accent rounded-full" />
+      <h4 className="text-white text-xl font-bold tracking-tight m-0">{title}</h4>
+    </div>
+    <div className="pl-6 border-l border-white/5 space-y-4">
+      {children}
+    </div>
+  </section>
+);
+
 export const ModalContent = {
   Privacy: () => (
-    <div className="space-y-8">
-      <section>
-        <h4 className="text-white text-xl font-bold mb-3 flex items-center gap-3">
-          <div className="w-2 h-2 bg-accent rounded-full" /> 1. Data Collection
-        </h4>
-        <p>At INCE GLOBAL, we prioritize the security and confidentiality of your data. We collect information only necessary to provide our premium investment and consulting services.</p>
-      </section>
-      <section>
-        <h4 className="text-white text-xl font-bold mb-3 flex items-center gap-3">
-          <div className="w-2 h-2 bg-accent rounded-full" /> 2. Usage of Information
-        </h4>
-        <p>Your information is used strictly for internal institutional purposes, strategic communication, and compliance with global financial regulations.</p>
-      </section>
-      <section>
-        <h4 className="text-white text-xl font-bold mb-3 flex items-center gap-3">
-          <div className="w-2 h-2 bg-accent rounded-full" /> 3. Third-Party Sharing
-        </h4>
-        <p>We do not sell or trade your personal data. Sharing only occurs with trusted partners under strict non-disclosure agreements for the purpose of executing investment strategies.</p>
-      </section>
+    <div>
+      <Section icon={FileText} title="Data Collection & Purpose">
+        <p>In accordance with GDPR-conscious standards, INCE GLOBAL B.V. collects personal data (such as name, email, company, and phone) exclusively via our inquiry form for the purpose of strategic communication and potential business engagement.</p>
+        <p>This information is processed based on your explicit consent when submitting an inquiry or for legitimate interest in establishing professional partnerships.</p>
+      </Section>
+      <Section icon={FileText} title="Security & Retention">
+        <p>Technical and organizational measures are in place to prevent unauthorized access, loss, or disclosure of your data. We retain inquiries only as long as necessary for the specified professional purpose or to comply with legal documentation obligations.</p>
+      </Section>
+      <Section icon={FileText} title="User Rights">
+        <p>You maintain the right to access, rectify, or request the deletion of your personal data at any time. For such requests, please contact us at hello@inceglobal.nl.</p>
+      </Section>
     </div>
   ),
   Terms: () => (
-    <div className="space-y-8">
-      <section>
-        <h4 className="text-white text-xl font-bold mb-3 flex items-center gap-3">
-          <div className="w-2 h-2 bg-secondary-accent rounded-full" /> 1. General Terms
-        </h4>
-        <p>By accessing the services of INCE GLOBAL, you agree to be bound by these terms of service and all applicable institutional laws and regulations.</p>
-      </section>
-      <section>
-        <h4 className="text-white text-xl font-bold mb-3 flex items-center gap-3">
-          <div className="w-2 h-2 bg-secondary-accent rounded-full" /> 2. Investment Risks
-        </h4>
-        <p>All investments carry inherent risks. Past performance is not indicative of future results. Clients are advised to seek independent financial counsel before committing capital.</p>
-      </section>
-      <section>
-        <h4 className="text-white text-xl font-bold mb-3 flex items-center gap-3">
-          <div className="w-2 h-2 bg-secondary-accent rounded-full" /> 3. Intellectual Property
-        </h4>
-        <p>All content, analysis models, and strategic frameworks presented are the protected intellectual property of INCE GLOBAL.</p>
-      </section>
+    <div>
+      <Section icon={Scale} title="Information Purpose">
+        <p>The content on this website is provided for general informational purposes only. It does not constitute a binding offer, legal advice, or a guarantee of business outcomes.</p>
+        <p>INCE GLOBAL B.V. is a business development and consultancy firm. We do not provide licensed financial advisory, asset management, or investment fund services.</p>
+      </Section>
+      <Section icon={Scale} title="Liability Limitation">
+        <p>While we strive for accuracy, we are not liable for errors or omissions in the website content. Any business decision made based on this information is at the user's discretion and risk.</p>
+      </Section>
+      <Section icon={Scale} title="Intellectual Property">
+        <p>All trademarks, logos, models, and text are the intellectual property of INCE GLOBAL B.V. Unauthorized reproduction or use is strictly prohibited.</p>
+      </Section>
     </div>
   ),
   Compliance: () => (
-    <div className="space-y-8">
-      <section>
-        <h4 className="text-white text-xl font-bold mb-3 flex items-center gap-3">
-          <div className="w-2 h-2 bg-accent rounded-full" /> 1. Regulatory Framework
-        </h4>
-        <p>INCE GLOBAL operates under the strict regulatory oversight of European financial authorities, ensuring the highest level of institutional integrity.</p>
-      </section>
-      <section>
-        <h4 className="text-white text-xl font-bold mb-3 flex items-center gap-3">
-          <div className="w-2 h-2 bg-accent rounded-full" /> 2. AML & KYC
-        </h4>
-        <p>We implement rigorous Anti-Money Laundering (AML) and Know Your Customer (KYC) protocols to maintain a transparent and secure investment environment.</p>
-      </section>
+    <div>
+      <Section icon={ShieldCheck} title="Ethical Business Conduct">
+        <p>INCE GLOBAL B.V. is committed to integrity, transparency, and the highest ethical standards. We strictly prohibit bribery, corruption, and any form of unethical commercial engagement.</p>
+      </Section>
+      <Section icon={ShieldCheck} title="Trade & Regulatory Compliance">
+        <p>We operate in full compliance with European and international trade regulations, including relevant sanctions and anti-money laundering (AML) awareness protocols.</p>
+      </Section>
+      <Section icon={ShieldCheck} title="Relationship Integrity">
+        <p>Our partnerships are built on mutual respect and shared compliance standards. We perform necessary due diligence on sourcing, trade partners, and strategic collaborators to ensure long-term stability.</p>
+      </Section>
     </div>
   ),
-  Offices: () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div className="p-8 glass-panel rounded-2xl bg-white/[0.03]">
-        <h4 className="text-secondary-accent font-bold mb-2 text-lg">Amsterdam (HQ)</h4>
-        <p className="text-white">Herengracht 450, 1017 CA</p>
-        <p className="text-zinc-500">Amsterdam, Netherlands</p>
+  Network: () => (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="p-8 glass-panel rounded-3xl bg-white/[0.03] border border-white/5">
+        <Globe className="w-8 h-8 text-accent mb-4" />
+        <h4 className="text-white font-bold text-xl mb-2">Netherlands Base</h4>
+        <p className="text-zinc-500 text-sm leading-relaxed">Our central operations are structured around European business hubs, providing a robust foundation for international coordination.</p>
       </div>
-      <div className="p-8 glass-panel rounded-2xl bg-white/[0.03]">
-        <h4 className="text-secondary-accent font-bold mb-2 text-lg">London</h4>
-        <p className="text-white">Mayfair Place, W1J 8AJ</p>
-        <p className="text-zinc-500">London, United Kingdom</p>
+      <div className="p-8 glass-panel rounded-3xl bg-white/[0.03] border border-white/5">
+        <Globe className="w-8 h-8 text-secondary-accent mb-4" />
+        <h4 className="text-white font-bold text-xl mb-2">Global Connectivity</h4>
+        <p className="text-zinc-500 text-sm leading-relaxed">INCE GLOBAL works with a cross-border perspective, connecting trade, technology, and project opportunities across established and emerging markets.</p>
       </div>
-      <div className="p-8 glass-panel rounded-2xl bg-white/[0.03]">
-        <h4 className="text-secondary-accent font-bold mb-2 text-lg">Dubai</h4>
-        <p className="text-white">Fintech Tower, DIFC</p>
-        <p className="text-zinc-500">Dubai, UAE</p>
-      </div>
-      <div className="p-8 glass-panel rounded-2xl bg-white/[0.03]">
-        <h4 className="text-secondary-accent font-bold mb-2 text-lg">Singapore</h4>
-        <p className="text-white">Marina Bay Financial Centre</p>
-        <p className="text-zinc-500">Singapore 018981</p>
+      <div className="md:col-span-2 p-8 glass-panel rounded-3xl bg-white/[0.03] border border-white/5">
+        <h4 className="text-white font-bold text-xl mb-4">Representative Structure</h4>
+        <p className="text-zinc-500 text-sm leading-relaxed">Additional locations and formal representative offices are updated and announced as they are formally established in accordance with our expansion strategy.</p>
       </div>
     </div>
   )
