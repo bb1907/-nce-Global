@@ -5,32 +5,55 @@
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { ArrowRight, Menu, X, Globe } from "lucide-react";
+import { ArrowRight, Menu, X, Globe, ChevronDown } from "lucide-react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { translations, Language, companyConfig } from "../translations";
 import { Logo } from "./Logo";
 
-export function Navbar({ lang, setLang, onOpenModal }: { lang: Language; setLang: (l: Language) => void; onOpenModal: (type: string) => void }) {
+export function Navbar({ lang, setLang }: { lang: Language; setLang: (l: Language) => void }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const t = translations[lang].nav;
+  const navigate = useNavigate();
+  const location = useLocation();
   const languages: Language[] = ['EN', 'NL', 'TR', 'ES'];
+
+  const scrollToSection = (e: React.MouseEvent, id: string) => {
+    if (location.pathname !== '/') {
+      navigate('/' + id);
+      return;
+    }
+    
+    e.preventDefault();
+    const element = document.getElementById(id.replace('#', ''));
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const NavContent = () => (
     <>
-      <NavLink href="#hero">{t.about}</NavLink>
-      <NavLink href="#business">{t.business}</NavLink>
-      <NavLink href="#vision">{t.vision}</NavLink>
-      <NavLink href="#network">{t.network}</NavLink>
-      <NavLink href="#contact">{t.contact}</NavLink>
+      <NavLink href="#hero" onClick={(e) => scrollToSection(e, '#hero')}>{t.about}</NavLink>
+      <NavLink href="#business" onClick={(e) => scrollToSection(e, '#business')}>{t.business}</NavLink>
+      <NavLink href="#vision" onClick={(e) => scrollToSection(e, '#vision')}>{t.vision}</NavLink>
+      <NavLink href="#network" onClick={(e) => scrollToSection(e, '#network')}>{t.network}</NavLink>
+      <Link 
+        to="/contact" 
+        className={`font-sans uppercase tracking-[0.2em] text-[10px] font-black transition-all ${
+          location.pathname === '/contact' ? 'text-accent' : 'text-zinc-500 hover:text-white'
+        }`}
+      >
+        {t.contact}
+      </Link>
     </>
   );
 
   return (
     <nav className="fixed top-0 w-full z-50 bg-obsidian/60 backdrop-blur-md border-b border-white/[0.05]">
       <div className="flex justify-between items-center max-w-7xl mx-auto px-8 h-20">
-        <div className="text-xl font-bold tracking-tighter text-white flex items-center gap-3 cursor-pointer shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+        <Link to="/" className="text-xl font-bold tracking-tighter text-white flex items-center gap-3 cursor-pointer shrink-0" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
           <Logo className="w-8 h-8" />
           <span className="hidden sm:inline">INCE GLOBAL</span>
-        </div>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden lg:flex items-center space-x-8">
@@ -38,21 +61,9 @@ export function Navbar({ lang, setLang, onOpenModal }: { lang: Language; setLang
         </div>
 
         <div className="hidden md:flex items-center gap-6">
-          <div className="flex items-center gap-1.5 p-1 bg-white/[0.03] border border-white/5 rounded-full">
-            {languages.map((l) => (
-              <button
-                key={l}
-                onClick={() => setLang(l)}
-                className={`text-[9px] font-black tracking-widest px-2.5 py-1 rounded-full transition-all ${
-                  lang === l ? "bg-accent text-white shadow-lg" : "text-zinc-500 hover:text-zinc-300"
-                }`}
-              >
-                {l}
-              </button>
-            ))}
-          </div>
+          <LanguageSelector lang={lang} setLang={setLang} />
           <button 
-            onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => navigate('/contact')}
             className="bg-white text-obsidian px-6 py-2.5 label-caps font-black hover:bg-zinc-200 transition-all active:scale-95 rounded-full text-[10px]"
           >
             {t.inquire}
@@ -76,29 +87,38 @@ export function Navbar({ lang, setLang, onOpenModal }: { lang: Language; setLang
           >
             <div className="flex flex-col p-8 space-y-8">
               <div className="flex flex-col space-y-6">
-                <MobileNavLink href="#hero" onClick={() => setIsMobileMenuOpen(false)}>{t.about}</MobileNavLink>
-                <MobileNavLink href="#business" onClick={() => setIsMobileMenuOpen(false)}>{t.business}</MobileNavLink>
-                <MobileNavLink href="#vision" onClick={() => setIsMobileMenuOpen(false)}>{t.vision}</MobileNavLink>
-                <MobileNavLink href="#network" onClick={() => setIsMobileMenuOpen(false)}>{t.network}</MobileNavLink>
-                <MobileNavLink href="#contact" onClick={() => setIsMobileMenuOpen(false)}>{t.contact}</MobileNavLink>
+                <MobileNavLink href="#hero" onClick={(e) => { setIsMobileMenuOpen(false); scrollToSection(e, '#hero'); }}>{t.about}</MobileNavLink>
+                <MobileNavLink href="#business" onClick={(e) => { setIsMobileMenuOpen(false); scrollToSection(e, '#business'); }}>{t.business}</MobileNavLink>
+                <MobileNavLink href="#vision" onClick={(e) => { setIsMobileMenuOpen(false); scrollToSection(e, '#vision'); }}>{t.vision}</MobileNavLink>
+                <MobileNavLink href="#network" onClick={(e) => { setIsMobileMenuOpen(false); scrollToSection(e, '#network'); }}>{t.network}</MobileNavLink>
+                <Link 
+                  to="/contact" 
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-2xl font-bold text-white hover:text-accent transition-colors"
+                >
+                  {t.contact}
+                </Link>
               </div>
               
               <div className="pt-8 border-t border-white/5 flex flex-col gap-6">
-                <div className="flex items-center gap-3">
-                  {languages.map((l) => (
-                    <button
-                      key={l}
-                      onClick={() => { setLang(l); setIsMobileMenuOpen(false); }}
-                      className={`flex-1 text-[10px] font-black tracking-widest py-3 rounded-xl transition-all ${
-                        lang === l ? "bg-accent text-white" : "bg-white/5 text-zinc-500"
-                      }`}
-                    >
-                      {l}
-                    </button>
-                  ))}
+                <div className="flex flex-col gap-3">
+                  <span className="text-[10px] font-black tracking-[0.2em] text-zinc-600 uppercase ml-4">Select Language</span>
+                  <div className="grid grid-cols-2 gap-3">
+                    {languages.map((l) => (
+                      <button
+                        key={l}
+                        onClick={() => { setLang(l); setIsMobileMenuOpen(false); }}
+                        className={`flex-1 text-[10px] font-black tracking-widest py-4 rounded-2xl transition-all border ${
+                          lang === l ? "bg-accent text-white border-accent shadow-lg shadow-accent/20" : "bg-white/5 text-zinc-500 border-white/5"
+                        }`}
+                      >
+                        {l}
+                      </button>
+                    ))}
+                  </div>
                 </div>
                 <button 
-                  onClick={() => { setIsMobileMenuOpen(false); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
+                  onClick={() => { setIsMobileMenuOpen(false); navigate('/contact'); }}
                   className="w-full bg-white text-obsidian py-5 label-caps font-black rounded-full"
                 >
                   {t.inquire}
@@ -112,10 +132,59 @@ export function Navbar({ lang, setLang, onOpenModal }: { lang: Language; setLang
   );
 }
 
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+function LanguageSelector({ lang, setLang }: { lang: Language; setLang: (l: Language) => void }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const languages: Language[] = ['EN', 'NL', 'TR', 'ES'];
+
+  return (
+    <div 
+      className="relative"
+      onMouseEnter={() => setIsOpen(true)}
+      onMouseLeave={() => setIsOpen(false)}
+    >
+      <button 
+        className="flex items-center gap-2.5 px-5 py-2.5 bg-white/[0.03] border border-white/5 rounded-full text-[10px] font-black tracking-widest text-zinc-300 hover:text-white transition-all hover:bg-white/5 select-none"
+      >
+        <Globe size={12} className="text-accent" />
+        {lang}
+        <ChevronDown size={12} className={`transition-transform duration-500 ease-out ${isOpen ? 'rotate-180 translate-y-px' : ''}`} />
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="absolute top-full right-0 mt-3 w-36 bg-obsidian/95 backdrop-blur-xl border border-white/10 rounded-[1.5rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] z-[100]"
+          >
+            <div className="p-2 flex flex-col gap-1">
+              {languages.map((l) => (
+                <button
+                  key={l}
+                  onClick={() => { setLang(l); setIsOpen(false); }}
+                  className={`text-[10px] font-black tracking-widest px-4 py-3.5 rounded-xl transition-all text-left flex items-center justify-between ${
+                    lang === l ? "bg-accent text-white shadow-lg shadow-accent/20" : "text-zinc-500 hover:bg-white/5 hover:text-white"
+                  }`}
+                >
+                  {l}
+                  {lang === l && <div className="w-1.5 h-1.5 bg-white rounded-full" />}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function NavLink({ href, children, onClick }: { href: string; children: React.ReactNode; onClick: (e: React.MouseEvent) => void }) {
   return (
     <a
       href={href}
+      onClick={onClick}
       className="font-sans uppercase tracking-[0.2em] text-[10px] font-black transition-all text-zinc-500 hover:text-white"
     >
       {children}
@@ -123,7 +192,7 @@ function NavLink({ href, children }: { href: string; children: React.ReactNode }
   );
 }
 
-function MobileNavLink({ href, children, onClick }: { href: string; children: React.ReactNode; onClick: () => void }) {
+function MobileNavLink({ href, children, onClick }: { href: string; children: React.ReactNode; onClick: (e: React.MouseEvent) => void }) {
   return (
     <a
       href={href}
@@ -137,6 +206,8 @@ function MobileNavLink({ href, children, onClick }: { href: string; children: Re
 
 export function Hero({ lang }: { lang: Language }) {
   const t = translations[lang].hero;
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <section id="hero" className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden bg-obsidian">
@@ -167,13 +238,19 @@ export function Hero({ lang }: { lang: Language }) {
           </p>
           <div className="flex flex-col sm:flex-row gap-6">
             <button 
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => navigate('/contact')}
               className="bg-white text-obsidian px-10 py-6 label-caps font-black hover:bg-zinc-200 transition-all rounded-full group flex items-center justify-center gap-3 shadow-2xl"
             >
               {t.cta_primary} <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
             <button 
-              onClick={() => document.getElementById('business')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => {
+                if (location.pathname !== '/') {
+                  navigate('/#business');
+                } else {
+                  document.getElementById('business')?.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
               className="border border-white/20 text-white px-10 py-6 label-caps font-black hover:bg-white/5 transition-all rounded-full flex items-center justify-center"
             >
               {t.cta_secondary}
@@ -185,7 +262,7 @@ export function Hero({ lang }: { lang: Language }) {
   );
 }
 
-export function Footer({ lang, onOpenModal }: { lang: Language; onOpenModal: (type: string) => void }) {
+export function Footer({ lang }: { lang: Language }) {
   const t = translations[lang];
 
   return (
@@ -212,20 +289,20 @@ export function Footer({ lang, onOpenModal }: { lang: Language; onOpenModal: (ty
         <div className="space-y-8">
           <h4 className="label-caps text-zinc-300 text-[10px]">{t.nav.about}</h4>
           <div className="flex flex-col gap-4">
-            <FooterNavLink href="#hero">{t.nav.about}</FooterNavLink>
-            <FooterNavLink href="#business">{t.nav.business}</FooterNavLink>
-            <FooterNavLink href="#vision">{t.nav.vision}</FooterNavLink>
-            <FooterNavLink href="#network">{t.nav.network}</FooterNavLink>
+            <Link to="/#hero" className="text-zinc-500 hover:text-white transition-colors text-sm font-medium">{t.nav.about}</Link>
+            <Link to="/#business" className="text-zinc-500 hover:text-white transition-colors text-sm font-medium">{t.nav.business}</Link>
+            <Link to="/#vision" className="text-zinc-500 hover:text-white transition-colors text-sm font-medium">{t.nav.vision}</Link>
+            <Link to="/#network" className="text-zinc-500 hover:text-white transition-colors text-sm font-medium">{t.nav.network}</Link>
           </div>
         </div>
 
         <div className="space-y-8">
           <h4 className="label-caps text-zinc-300 text-[10px]">Information</h4>
           <div className="flex flex-col gap-4">
-            <FooterButton onClick={() => onOpenModal("Privacy")}>Privacy Policy</FooterButton>
-            <FooterButton onClick={() => onOpenModal("Terms")}>Terms of Service</FooterButton>
-            <FooterButton onClick={() => onOpenModal("Compliance")}>Compliance</FooterButton>
-            <FooterButton onClick={() => onOpenModal("Network")}>{t.footer.compliance}</FooterButton>
+            <Link to="/privacy" className="text-zinc-500 hover:text-white transition-colors text-sm font-medium">Privacy Policy</Link>
+            <Link to="/terms" className="text-zinc-500 hover:text-white transition-colors text-sm font-medium">Terms of Service</Link>
+            <Link to="/compliance" className="text-zinc-500 hover:text-white transition-colors text-sm font-medium">Compliance</Link>
+            <Link to="/network" className="text-zinc-500 hover:text-white transition-colors text-sm font-medium">{t.footer.compliance}</Link>
           </div>
         </div>
       </div>

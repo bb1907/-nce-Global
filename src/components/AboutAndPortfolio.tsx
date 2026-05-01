@@ -69,17 +69,19 @@ export function Portfolio({ lang }: { lang: Language }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {areas.map((area, i) => {
+          {areas.map((area) => {
             const data = (t as any)[area.key];
+            if (!data) return null;
             return (
-              <PortfolioCard
-                key={i}
-                num={data.label}
-                title={data.title}
-                desc={data.desc}
-                icon={area.icon}
-                lang={lang}
-              />
+              <div key={area.key}>
+                <PortfolioCard
+                  num={data.label}
+                  title={data.title}
+                  desc={data.desc}
+                  icon={area.icon}
+                  lang={lang}
+                />
+              </div>
             );
           })}
         </div>
