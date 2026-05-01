@@ -309,7 +309,7 @@ export function Footer({ lang }: { lang: Language }) {
       
       <div className="max-w-7xl mx-auto px-8 mt-24 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-10">
         <div className="text-[10px] uppercase tracking-[0.2em] text-zinc-600 font-black">
-          © {companyConfig.year} {companyConfig.name}. All rights reserved.
+          © {companyConfig.year} {companyConfig.fullName}. All rights reserved.
         </div>
         <div className="text-[10px] uppercase tracking-[0.3em] text-zinc-500 font-black">
           {t.footer.rights}

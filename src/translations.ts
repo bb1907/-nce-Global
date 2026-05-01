@@ -20,7 +20,7 @@ export const translations = {
   EN: {
     nav: {
       about: "About",
-      business: "Business Areas",
+      business: "Services",
       vision: "Vision",
       network: "Network",
       contact: "Contact",
@@ -31,7 +31,7 @@ export const translations = {
       title: "Building Global Business Opportunities",
       subtext: "INCE GLOBAL supports companies, entrepreneurs, and partners across international trade, consultancy, technology, construction, procurement, and corporate growth opportunities.",
       cta_primary: "Start a Conversation",
-      cta_secondary: "Explore Business Areas"
+      cta_secondary: "Explore Our Services"
     },
     about: {
       label: "ABOUT INCE GLOBAL",
@@ -45,8 +45,8 @@ export const translations = {
       ]
     },
     business: {
-      label: "SERVICES",
-      title: "Business Areas",
+      label: "EXCELLENCE",
+      title: "Our Services",
       trade: {
         label: "01 / COMMERCE",
         title: "International Trade",
@@ -128,13 +128,13 @@ export const translations = {
     }
   },
   TR: {
-    nav: { about: "Hakkımızda", business: "İş Alanları", vision: "Vizyon", network: "Ağ", contact: "İletişim", inquire: "İletişime Geç" },
+    nav: { about: "Hakkımızda", business: "Hizmetlerimiz", vision: "Vizyon", network: "Ağ", contact: "İletişim", inquire: "İletişime Geç" },
     hero: {
       eyebrow: "ULUSLARARASI İŞ VE STRATEJİK DANIŞMANLIK",
       title: "Küresel İş Fırsatları İnşa Ediyoruz",
       subtext: "INCE GLOBAL; uluslararası ticaret, danışmanlık, teknoloji, inşaat, tedarik ve kurumsal büyüme fırsatlarında şirketleri, girişimcileri ve ortakları destekler.",
       cta_primary: "Bir Görüşme Başlatın",
-      cta_secondary: "İş Alanlarını Keşfedin"
+      cta_secondary: "Hizmetlerimizi Keşfedin"
     },
     about: {
       label: "INCE GLOBAL HAKKINDA",
@@ -148,8 +148,8 @@ export const translations = {
       ]
     },
     business: {
-      label: "HİZMETLER",
-      title: "İş Alanları",
+      label: "UZMANLIK",
+      title: "Hizmetlerimiz",
       trade: { label: "01 / TİCARET", title: "Uluslararası Ticaret", desc: "İthalat, ihracat, kaynak bulma ve pazar erişimi desteği." },
       consultancy: { label: "02 / STRATEJİ", title: "Danışmanlık", desc: "İş stratejisi ve uluslararası büyüme için danışmanlık desteği." },
       tech: { label: "03 / İNOVASYON", title: "Teknoloji", desc: "Dijital platformlar, yazılım çözümleri ve yapay zeka destekli iş akışları." },
@@ -207,13 +207,13 @@ export const translations = {
     }
   },
   NL: {
-    nav: { about: "Over ons", business: "Werkgebieden", vision: "Visie", network: "Netwerk", contact: "Contact", inquire: "Aanvragen" },
+    nav: { about: "Over ons", business: "Diensten", vision: "Visie", network: "Netwerk", contact: "Contact", inquire: "Aanvragen" },
     hero: {
       eyebrow: "INTERNATIONAAL BEDRIJF & STRATEGISCH ADVIES",
       title: "Bouwen aan Wereldwijde Zakelijke Kansen",
       subtext: "INCE GLOBAL ondersteunt bedrijven, ondernemers en partners bij internationale handel, consultancy, technologie, bouw, inkoop en groei.",
       cta_primary: "Start een Gesprek",
-      cta_secondary: "Verken Werkgebieden"
+      cta_secondary: "Verken Diensten"
     },
     about: {
       label: "OVER INCE GLOBAL",
@@ -227,8 +227,8 @@ export const translations = {
       ]
     },
     business: {
-      label: "DIENSTEN",
-      title: "Werkgebieden",
+      label: "EXPERTISE",
+      title: "Onze Diensten",
       trade: { label: "01 / COMMERCE", title: "Internationale Handel", desc: "Ondersteuning bij import, export, sourcing en markttoegang." },
       consultancy: { label: "02 / STRATEGIE", title: "Consultancy", desc: "Advisering voor bedrijfsstrategie en internationale groei." },
       tech: { label: "03 / INNOVATIE", title: "Technologie", desc: "Digitale platforms, softwareoplossingen en automatisering." },
@@ -286,13 +286,13 @@ export const translations = {
     }
   },
   ES: {
-    nav: { about: "Sobre nosotros", business: "Áreas de negocio", vision: "Visión", network: "Red", contact: "Contacto", inquire: "Inquire" },
+    nav: { about: "Sobre nosotros", business: "Servicios", vision: "Visión", network: "Red", contact: "Contacto", inquire: "Inquire" },
     hero: {
       eyebrow: "NEGOCIO INTERNACIONAL Y CONSULTORÍA ESTRATÉGICA",
       title: "Construyendo Oportunidades de Negocio Globales",
       subtext: "INCE GLOBAL apoya a empresas y emprendedores en comercio internacional, consultoría, tecnología, construcción y crecimiento corporativo.",
       cta_primary: "Iniciar una Conversación",
-      cta_secondary: "Explorar Áreas de Negocio"
+      cta_secondary: "Explorar Servicios"
     },
     about: {
       label: "SOBRE INCE GLOBAL",
@@ -306,8 +306,8 @@ export const translations = {
       ]
     },
     business: {
-      label: "SERVICIOS",
-      title: "Áreas de Negocio",
+      label: "EXPERIENCIA",
+      title: "Nuestros Servicios",
       trade: { label: "01 / COMERCIO", title: "Comercio Internacional", desc: "Apoyo en importación, exportación, abastecimiento y acceso a mercados." },
       consultancy: { label: "02 / ESTRATEGIA", title: "Consultoría", desc: "Asesoramiento en estrategia empresarial y crecimiento internacional." },
       tech: { label: "03 / INNOVACIÓN", title: "Tecnología", desc: "Plataformas digitales, soluciones de software y flujos de trabajo con IA." },
