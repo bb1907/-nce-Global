@@ -14,7 +14,7 @@ export function TermsPage({ lang }: { lang: Language }) {
   }, []);
 
   return (
-    <div className="pt-32 pb-24 min-h-screen bg-obsidian">
+    <div className="pt-32 pb-24 min-h-screen bg-white dark:bg-obsidian transition-colors duration-500">
       <div className="max-w-4xl mx-auto px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -27,11 +27,11 @@ export function TermsPage({ lang }: { lang: Language }) {
             </div>
             <div>
               <span className="label-caps text-accent tracking-[0.3em] block mb-2">Institutional Framework</span>
-              <h1 className="text-5xl font-bold text-white tracking-tight">Terms of Service</h1>
+              <h1 className="text-5xl font-bold text-obsidian dark:text-white tracking-tight">Terms of Service</h1>
             </div>
           </div>
 
-          <div className="prose prose-invert max-w-none text-zinc-400 font-light leading-relaxed text-lg space-y-12">
+          <div className="prose dark:prose-invert max-w-none text-zinc-500 dark:text-zinc-400 font-light leading-relaxed text-lg space-y-12 transition-colors duration-500">
             <Section title="Information Purpose">
               <p>The content on this website is provided for general informational purposes only. It does not constitute a binding offer, legal advice, or a guarantee of business outcomes.</p>
               <p>INCE GLOBAL B.V. is a business development and consultancy firm. We do not provide licensed financial advisory, asset management, or investment fund services.</p>
@@ -56,9 +56,9 @@ function Section({ title, children }: { title: string; children: React.ReactNode
     <section className="space-y-6">
       <div className="flex items-center gap-4">
         <div className="w-1.5 h-1.5 bg-accent rounded-full" />
-        <h2 className="text-white text-2xl font-bold tracking-tight m-0">{title}</h2>
+        <h2 className="text-obsidian dark:text-white text-2xl font-bold tracking-tight m-0">{title}</h2>
       </div>
-      <div className="pl-6 border-l border-white/5 space-y-4">
+      <div className="pl-6 border-l border-zinc-200 dark:border-white/5 space-y-4">
         {children}
       </div>
     </section>

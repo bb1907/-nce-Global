@@ -12,7 +12,7 @@ export function About({ lang }: { lang: Language }) {
   const t = translations[lang].about;
 
   return (
-    <section id="about" className="py-32 bg-obsidian relative overflow-hidden">
+    <section id="about" className="py-32 bg-white dark:bg-obsidian relative overflow-hidden transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -21,8 +21,8 @@ export function About({ lang }: { lang: Language }) {
           className="space-y-10"
         >
           <span className="label-caps tracking-[0.3em] text-accent font-black">{t.label}</span>
-          <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-white leading-[1.1]">{t.title}</h2>
-          <p className="text-xl text-zinc-400 font-light leading-relaxed max-w-xl">
+          <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-obsidian dark:text-white leading-[1.1] transition-colors duration-500">{t.title}</h2>
+          <p className="text-xl text-zinc-500 dark:text-zinc-400 font-light leading-relaxed max-w-xl transition-colors duration-500">
             {t.text}
           </p>
         </motion.div>
@@ -35,11 +35,11 @@ export function About({ lang }: { lang: Language }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="p-8 glass-panel rounded-[2.5rem] hover:bg-white/[0.03] transition-all group border border-white/5 hover:border-white/10"
+              className="p-8 glass-panel rounded-[2.5rem] hover:bg-zinc-50 dark:hover:bg-white/[0.03] transition-all group border border-zinc-200 dark:border-white/5 hover:border-zinc-300 dark:hover:border-white/10"
             >
               <div className="w-1 h-8 bg-accent/20 mb-6 group-hover:bg-accent transition-colors rounded-full" />
-              <h3 className="text-white font-bold mb-4 text-xl group-hover:text-accent transition-colors">{card.title}</h3>
-              <p className="text-zinc-500 text-sm leading-relaxed font-light">{card.desc}</p>
+              <h3 className="text-obsidian dark:text-white font-bold mb-4 text-xl group-hover:text-accent transition-colors">{card.title}</h3>
+              <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed font-light">{card.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -61,11 +61,11 @@ export function Portfolio({ lang }: { lang: Language }) {
   ];
 
   return (
-    <section id="business" className="py-32 bg-obsidian-light relative">
+    <section id="business" className="py-spacing-section bg-zinc-50 dark:bg-obsidian-light relative transition-colors duration-500">
       <div className="max-w-7xl mx-auto px-8">
         <div className="mb-20 text-center lg:text-left">
           <span className="label-caps mb-6 block text-secondary-accent tracking-[0.3em] font-black">{t.label}</span>
-          <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-white">{t.title}</h2>
+          <h2 className="text-5xl md:text-6xl font-bold tracking-tight text-obsidian dark:text-white transition-colors duration-500">{t.title}</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -97,17 +97,17 @@ function PortfolioCard({ num, title, desc, icon, lang }: { num: string; title: s
       initial={{ opacity: 0, scale: 0.95 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      className="group relative h-[400px] overflow-hidden glass-panel rounded-[2.5rem] p-10 flex flex-col justify-between hover:bg-white/[0.04] transition-all border border-white/5 hover:border-accent/20"
+      className="group relative h-[400px] overflow-hidden glass-panel rounded-[2.5rem] p-10 flex flex-col justify-between hover:bg-white dark:hover:bg-white/[0.04] transition-all border border-zinc-200 dark:border-white/5 hover:border-accent/20 shadow-sm dark:shadow-none hover:shadow-2xl hover:shadow-accent/5 dark:hover:shadow-none"
     >
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-10">
-          <div className="p-4 bg-white/5 rounded-2xl group-hover:bg-accent/10 transition-all border border-white/5">
+          <div className="p-4 bg-zinc-100 dark:bg-white/5 rounded-2xl group-hover:bg-accent/10 transition-all border border-zinc-200 dark:border-white/5">
             {icon}
           </div>
-          <span className="text-[10px] font-black tracking-[0.2em] text-zinc-500">{num}</span>
+          <span className="text-[10px] font-black tracking-[0.2em] text-zinc-400 dark:text-zinc-500">{num}</span>
         </div>
-        <h3 className="text-2xl font-bold text-white mb-4 transition-colors group-hover:text-accent group-hover:translate-x-1 transition-all">{title}</h3>
-        <p className="text-zinc-400 text-sm leading-relaxed font-light">{desc}</p>
+        <h3 className="text-2xl font-bold text-obsidian dark:text-white mb-4 transition-colors group-hover:text-accent group-hover:translate-x-1 transition-all">{title}</h3>
+        <p className="text-zinc-500 dark:text-zinc-400 text-sm leading-relaxed font-light">{desc}</p>
       </div>
       <div className="relative z-10 flex items-center gap-2 text-accent text-[10px] font-black tracking-widest uppercase opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all cursor-pointer">
         {t.learnMore} <MoveUpRight className="w-3 h-3" />
